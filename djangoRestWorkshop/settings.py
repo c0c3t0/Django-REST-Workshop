@@ -41,10 +41,7 @@ INSTALLED_APPS = [
 
     'djangoRestWorkshop.todos',
     'djangoRestWorkshop.todo_auth',
-
-
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

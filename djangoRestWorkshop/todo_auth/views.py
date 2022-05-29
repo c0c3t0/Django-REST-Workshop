@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model, logout, login
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
@@ -10,11 +10,13 @@ UserModel = get_user_model()
 
 
 class RegisterView(CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = UserModel.objects.all()
     serializer_class = CreateUserSerializer
 
 
 class LoginView(APIView):
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(
@@ -35,6 +37,8 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self, request):
         request.user.auth_token.delete()
         logout(request)

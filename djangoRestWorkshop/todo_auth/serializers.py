@@ -27,21 +27,21 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return result
 
     # invoke django password validators
-    # def validate(self, data):
-    #     user = UserModel(**data)
-    #     password = data.get('password')
-    #
-    #     errors = dict()
-    #     try:
-    #         validators.validate_password(password=password, user=user)
-    #
-    #     except exceptions.ValidationError as exception:
-    #         errors['password'] = list(exception.messages)
-    #
-    #     if errors:
-    #         raise serializers.ValidationError(errors)
-    #
-    #     return super().validate(data)
+    def validate(self, data):
+        user = UserModel(**data)
+        password = data.get('password')
+
+        errors = {}
+        try:
+            validators.validate_password(password=password, user=user)
+
+        except exceptions.ValidationError as exception:
+            errors['password'] = list(exception.messages)
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return super().validate(data)
 
 
 class LoginSerializer(serializers.Serializer):

@@ -11,6 +11,9 @@ class Category(models.Model):
         max_length=NAME_MAX_LEN,
     )
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Todo(models.Model):
     TITLE_MAX_LEN = 30
@@ -21,14 +24,19 @@ class Todo(models.Model):
 
     description = models.TextField()
 
-    state = models.BooleanField(
+    is_done = models.BooleanField(
         default=False,
     )
+
     category = models.ForeignKey(
         Category,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
+
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f'{self.title}'
